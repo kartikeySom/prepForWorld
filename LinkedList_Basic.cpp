@@ -7,15 +7,15 @@ class ll
   public:
   ll()
   {
-      node = nullptr;
+      next = nullptr;
       val = -1;
   }
   void insert(int);
-  int delete(int);
+  int del(int);
+  void printll();
 };
-ll* head;
-ll* curr;
-head = curr = nullptr;
+ll* head = nullptr;
+ll* curr = nullptr;
 void ll::insert(int val)
 {
   if(nullptr == head)
@@ -33,7 +33,7 @@ void ll::insert(int val)
   }
 }
 
-int ll::delete(int val)
+int ll::del(int val)
 {
     int retVal = -1;
     if(nullptr == head)
@@ -44,9 +44,12 @@ int ll::delete(int val)
         int node = 1;
         while(tmp->next != nullptr)
         {
-            if(val == tmp->val)
+            if(val == tmp->next->val)
             {
-              cout << "Val found at node " << node;
+              cout << "Val found at node " << ++node << endl;;
+              ll* tmp1 = tmp->next;
+              tmp->next = tmp->next->next;
+              free(tmp1);
               retVal = val;
               break;
             }
@@ -69,4 +72,18 @@ void ll::printll()
         cout << tmp->val;
         tmp = tmp->next;
     }
+}
+
+int main()
+{
+    ll obj;
+    obj.insert(1);
+    obj.insert(2);
+    obj.insert(3);
+    obj.insert(4);
+    obj.insert(5);
+    obj.printll();
+    cout << endl;
+    obj.del(3);
+    obj.printll();
 }
